@@ -1,36 +1,68 @@
 import json
 import requests
+from time import sleep
+
+from settings import IP
+from utils import fetch_username, clamp
 
 
-def fetch_username():
-    data = {"devicetype":"my_hue_app#bryce"}
-
-    r = requests.get(f'http://{IP}/api', json=data)
-    if r.status_code == 200:
-        return load_username()
-
-    r = requests.post(f'http://{IP}/api', json=data)
-
-    if 'error' in r.json()[0]:
-        raise Exception(f'{r.json()[0]["error"]["description"]}')
-
-    username = r.json()[0]['success']['username']
-    save_username(username)
-    return username
-
-def save_username(string):
-    with open('username.txt', 'w') as f:
-        f.write(string)
-
-def load_username():
-    with open('username.txt', 'r') as f:
-        username = f.read().strip()
-    if username:
-        return username
-
-IP = '192.168.1.4'
 id_key = fetch_username()
-response = requests.get(f'http://{IP}/api/{id_key}/lights')
 
-for key, val in response.json().items():
-    print(key, val)
+
+def get_lights():
+    response = requests.get(f'http://{IP}/api/{id_key}/lights')
+
+    for key, val in response.json().items():
+        print(key, val)
+
+
+def list_light_params():
+    response = requests.get(f'http://{IP}/api/{id_key}/lights')
+
+    for _, values in response.json().items():
+        print([val for val in values['state']])
+        break
+
+
+def change_light(brightness=255, hue=60000, saturation=255, effect=None):
+    brightness = clamp(brightness, 0, 254)
+    hue = clamp(hue, 0, 65535)
+    saturation = clamp(saturation, 0, 254)
+
+    data = {
+        'on': True,
+        'bri': brightness,
+        'hue': hue,
+        'sat': saturation,
+        # 'alert': 'select',
+    }
+
+
+
+    if effect is not None:
+        data['effect'] = effect
+
+    response = requests.put(f'http://{IP}/api/{id_key}/lights/2/state', json=data)
+    print(response.json())
+
+
+def turn_off():
+    data = {'on': False}
+    response = requests.put(f'http://{IP}/api/{id_key}/lights/2/state', json=data)
+    print(response.json())
+
+
+def turn_on():
+    data = {'on': True}
+    response = requests.put(f'http://{IP}/api/{id_key}/lights/2/state', json=data)
+    print(response.json())
+
+
+list_light_params()
+
+# for i in reversed(range(100)):
+#     print(i)
+#     change_light(brightness=i)
+#     sleep(0.3)
+change_light(brightness=100, hue=32000)
+
