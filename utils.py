@@ -1,5 +1,6 @@
 import requests
 
+
 def fetch_username(IP):
     data = {"devicetype": "my_hue_app#bryce"}
 
@@ -36,5 +37,13 @@ def clamp(value, minimum, maximum):
         return maximum
     else:
         return value
+
+
+def as_percentage(val, max_val):
+    val = clamp(val, 0, 100)
+    return (max_val // 100) * val
+
+
+
 
 
