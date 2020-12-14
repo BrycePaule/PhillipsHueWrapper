@@ -2,11 +2,10 @@ import json
 import requests
 from time import sleep
 
-from settings import IP
-from utils import fetch_username, clamp
-
-
-id_key = fetch_username()
+from settings import IP, id_key
+from utils import clamp
+from lookups import lookup_lights, lookup_light_params
+from Colour import Colour
 
 
 def get_lights():
@@ -16,31 +15,19 @@ def get_lights():
         print(key, val)
 
 
-def list_light_params():
-    response = requests.get(f'http://{IP}/api/{id_key}/lights')
+def change_light(xy=None, brightness=None, transitiontime=None):
+    data = {'on': True}
 
-    for _, values in response.json().items():
-        print([val for val in values['state']])
-        break
+    if brightness:
+        brightness = clamp(brightness, 0, 100)
+        brightness = (254 // 100) * brightness
+        data['bri'] = brightness
 
+    if xy:
+        data['xy'] = xy
 
-def change_light(brightness=255, hue=60000, saturation=255, effect=None):
-    brightness = clamp(brightness, 0, 254)
-    hue = clamp(hue, 0, 65535)
-    saturation = clamp(saturation, 0, 254)
-
-    data = {
-        'on': True,
-        'bri': brightness,
-        'hue': hue,
-        'sat': saturation,
-        # 'alert': 'select',
-    }
-
-
-
-    if effect is not None:
-        data['effect'] = effect
+    if transitiontime:
+        data['transitiontime'] = transitiontime
 
     response = requests.put(f'http://{IP}/api/{id_key}/lights/2/state', json=data)
     print(response.json())
@@ -58,11 +45,13 @@ def turn_on():
     print(response.json())
 
 
-list_light_params()
+lookup_light_params()
+# lookup_lights()
 
-# for i in reversed(range(100)):
-#     print(i)
-#     change_light(brightness=i)
-#     sleep(0.3)
-change_light(brightness=100, hue=32000)
+for colour in Colour.colour_maps:
+    print(colour)
+    transition_time = 2
+    change_light(xy=Colour(colour).as_xy(), brightness=220, transitiontime=transition_time * 10)
+
+    sleep(transition_time)
 

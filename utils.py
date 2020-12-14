@@ -1,8 +1,6 @@
 import requests
-from settings import IP
 
-
-def fetch_username():
+def fetch_username(IP):
     data = {"devicetype": "my_hue_app#bryce"}
 
     r = requests.get(f'http://{IP}/api', json=data)
@@ -38,3 +36,5 @@ def clamp(value, minimum, maximum):
         return maximum
     else:
         return value
+
+
