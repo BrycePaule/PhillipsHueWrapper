@@ -1,8 +1,21 @@
-from Colour import Colour
-from utils import clamp, as_percentage
+from Wrappers.Colour import Colour
+from Utilities.utils import clamp
 
 
 class Action:
+
+    """
+    light_id : unique int
+    on : bool
+    bri : int [0, ..., 100]
+    hue : int [0, ..., 65535]
+    sat : int [0, ..., 100]
+    colour : Colour
+    ct : int [0, ..., 500]
+    effects : [colorloop]
+    alert : [select, lselect]
+    transition_time : int in centiseconds (10 = 1s)
+    """
 
     def __init__(
             self,
@@ -26,7 +39,7 @@ class Action:
         self.ct = ct
         self.effect = effect
         self.alert = alert
-        self.transitiontime = transition_time
+        self.transitiontime = transition_time * 10 if transition_time else None
 
     def as_dict(self):
         args = self.__dict__
