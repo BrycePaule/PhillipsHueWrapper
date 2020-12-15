@@ -3,10 +3,11 @@ from time import sleep
 
 from Utilities.settings import IP, user_id
 from Requests.get import all_lights, all_lights_by_id, all_lights_by_name
-from Wrappers.Colour import Colour
-from Wrappers.Action import Action
+from CustomObjects.Colour import Colour
+from CustomObjects.Action import Action
 from Requests.BasicCommands import send_actions
 import Requests.Effects as effects
+from CustomObjects.LightGroup import LightGroup
 
 
 # for light in all_lights_by_id():
@@ -24,3 +25,6 @@ colours = [Colour('red'), Colour('green'), Colour('blue')]
 
 
 send_actions([Action(2, bri=30, colour=Colour((255, 80, 0)))])
+
+
+

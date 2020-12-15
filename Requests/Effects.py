@@ -1,7 +1,7 @@
 from time import sleep
 
-from Wrappers.Colour import Colour
-from Wrappers.Action import Action
+from CustomObjects.Colour import Colour
+from CustomObjects.Action import Action
 from Requests.BasicCommands import send_actions
 
 

@@ -1,4 +1,4 @@
-from Wrappers.Colour import Colour
+from CustomObjects.Colour import Colour
 from Utilities.utils import clamp
 
 
