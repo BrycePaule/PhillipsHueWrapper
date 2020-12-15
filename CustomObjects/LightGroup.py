@@ -1,8 +1,8 @@
 
 class LightGroup:
 
-    def __init__(self, *lights):
-        self.lights = list(lights)
+    def __init__(self, lights):
+        self.lights = lights
         self.index = 0
 
     def __iter__(self):
@@ -19,3 +19,7 @@ class LightGroup:
 
     def __getitem__(self, item):
         return self.lights[item]
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.lights})'
+

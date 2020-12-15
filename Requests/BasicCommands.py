@@ -33,4 +33,4 @@ def send_actions(actions):
             print(r.json())
 
             if action.transitiontime:
-                sleep(action.transitiontime * 10)
+                sleep(action.transitiontime / 10)
