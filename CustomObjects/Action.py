@@ -42,7 +42,7 @@ class Action:
         self.ct = ct
         self.effect = effect
         self.alert = alert
-        self.transitiontime = transition_time * 10 if transition_time else None
+        self.transitiontime = transition_time * 10 if transition_time else 0
 
         if xy:
             self.xy = xy

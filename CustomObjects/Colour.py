@@ -1,3 +1,5 @@
+import random
+from Utilities.utils import clamp, offset_colour_channel
 
 class Colour:
 
@@ -40,6 +42,29 @@ class Colour:
         y = Y / (X + Y + Z)
 
         return [x, y]
+
+    @staticmethod
+    def random():
+        r = random.randint(0, 255)
+        g = random.randint(0, 255)
+        b = random.randint(0, 255)
+        return Colour((r, g, b))
+
+    @staticmethod
+    def random_warm_colour():
+        r = random.randint(200, 255)
+        g = random.randint(0, 100)
+        return Colour((r, g, 0))
+
+    @staticmethod
+    def random_similar(colour, change_percent):
+        if type(change_percent) is int:
+            change_percent /= 100
+
+        r = offset_colour_channel(colour.r, change_percent)
+        g = offset_colour_channel(colour.g, change_percent)
+        b = offset_colour_channel(colour.b, change_percent)
+        return Colour((r, g, b))
 
     def __repr__(self):
         return f'{self.__class__.__name__}{self.rgb}'
