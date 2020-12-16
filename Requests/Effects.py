@@ -6,15 +6,17 @@ from Requests.BasicCommands import send_actions
 from CustomObjects.LightGroup import LightGroup
 
 
-def fade_between(lights: LightGroup, colours, fade_time):
+def fade_between(lights: LightGroup, colours, fade_time=10, brightness=100):
     if len(colours) < 2:
         return
 
     index = 0
     while True:
         for light in lights:
-            action = Action(light.id, on=True, colour=colours[index], transition_time=fade_time)
+            action = Action(light, on=True, colour=colours[index], transition_time=fade_time, bri=brightness)
             send_actions([action])
+
+        sleep(fade_time)
 
         index = (index + 1) % len(colours)
 
@@ -26,7 +28,7 @@ def flash_between(lights, colours):
     index = 0
     while True:
         for light in lights:
-            action = Action(light.id, on=True, colour=colours[index])
+            action = Action(light, on=True, colour=colours[index])
             send_actions([action])
         index = (index + 1) % len(colours)
         sleep(0.7)
@@ -38,7 +40,7 @@ def blink(lights, colours, flash_time, count=1):
     index = 0
     while count > 0:
         for light in lights:
-            action = Action(light.id, on=True, colour=colours[index], bri=100, alert='select')
+            action = Action(light, on=True, colour=colours[index], bri=100, alert='select')
             send_actions([action])
         sleep(flash_time)
 

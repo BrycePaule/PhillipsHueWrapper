@@ -6,6 +6,7 @@ def fetch_username(IP):
 
     r = requests.get(f'http://{IP}/api', json=data)
     if r.status_code == 200:
+        print('Established known connection to Phillips Hue Hub.')
         return load_username()
 
     r = requests.post(f'http://{IP}/api', json=data)
@@ -15,6 +16,7 @@ def fetch_username(IP):
 
     username = r.json()[0]['success']['username']
     save_username(username)
+    print('Established new connection to Phillips Hue Hub.')
     return username
 
 
@@ -37,11 +39,6 @@ def clamp(value, minimum, maximum):
         return maximum
     else:
         return value
-
-
-def as_percentage(val, max_val):
-    val = clamp(val, 0, 100)
-    return (max_val // 100) * val
 
 
 

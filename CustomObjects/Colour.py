@@ -12,6 +12,9 @@ class Colour:
         'light_blue': (0, 255, 255),
         'yellow': (255, 255, 0),
         'orange': (255, 127, 0),
+
+        # descriptions
+        'productivity': (255, 255, 210)
     }
 
     def __init__(self, colour):
