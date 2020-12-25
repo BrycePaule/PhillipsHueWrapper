@@ -16,7 +16,8 @@ class Colour:
         'orange': (255, 127, 0),
 
         # descriptions
-        'productivity': (255, 255, 210)
+        'productivity': (255, 255, 210),
+        'relax': (210, 60, 10),
     }
 
     def __init__(self, colour):
@@ -38,6 +39,7 @@ class Colour:
 
         if X + Y + Z == 0:
             return [0, 0]
+
         x = X / (X + Y + Z)
         y = Y / (X + Y + Z)
 

@@ -32,6 +32,8 @@ def load_username():
     if username:
         return username
 
+""" HELPER FUNCTIONS """
+
 def clamp(value, minimum, maximum):
     if value <= minimum:
         return minimum
@@ -39,8 +41,6 @@ def clamp(value, minimum, maximum):
         return maximum
     else:
         return value
-
-""" HELPER FUNCTIONS """
 
 def increment_index(index, cap, count=1):
     return (index + count) % cap

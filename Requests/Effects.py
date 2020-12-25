@@ -9,7 +9,7 @@ from Utilities.utils import increment_index, roll, offset_val_by_percentage
 from itertools import cycle
 
 
-def fade_between(lights: LightGroup, colours, fade_time=10, brightness=100, alternate_lights=False):
+def fade_between(lights: LightGroup, colours, transition_time=10, brightness=100, alternate_lights=False):
     if len(colours) < 2:
         return
 
@@ -21,10 +21,10 @@ def fade_between(lights: LightGroup, colours, fade_time=10, brightness=100, alte
             else:
                 colour = colours[index]
 
-            action = Action(light, on=True, colour=colour, transition_time=fade_time, bri=brightness)
+            action = Action(light, on=True, colour=colour, transition_time=transition_time, bri=brightness)
             send_actions([action])
 
-        sleep(fade_time)
+        sleep(transition_time)
 
         index = increment_index(index, len(colours))
 
@@ -64,14 +64,21 @@ def blink(lights, colours, flash_time, count=1):
 
 def lava_lamp(lights, colour, transition_time=10, brightness=100, similarity_percent=20):
     while True:
+        blinked = False
         for light in lights:
 
             # chance to blink
-            if roll(5):
+            if roll(5) and not blinked:
                 send_actions([Action(light, on=False, transition_time=transition_time)])
+                blinked = True
                 continue
 
-            offset_brightness = offset_val_by_percentage(brightness, similarity_percent, clamp_val=True, lower=0, upper=100)
+            # chance to slightly dim:
+            if roll(33):
+                offset_brightness = offset_val_by_percentage(brightness, similarity_percent, clamp_val=True, lower=0, upper=100)
+            else:
+                offset_brightness = brightness
+
             offset_colour = Colour.random_similar(colour, similarity_percent)
 
             action = Action(light, on=True, colour=offset_colour, bri=offset_brightness, transition_time=transition_time)

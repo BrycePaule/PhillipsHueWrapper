@@ -9,15 +9,9 @@ from Requests.BasicCommands import send_actions, fetch_all_lights
 import Requests.Effects as effects
 from CustomObjects.LightGroup import LightGroup
 
+from FlaskApp.app import app
 
-lights = fetch_all_lights()
+# light_group = fetch_all_lights()
+# effects.lava_lamp(light_group, colour=Colour('relax'), similarity_percent=10, transition_time=5)
 
-# effects.fade_between(lights, [Colour('red'), Colour('green'), Colour('blue')], fade_time=20, alternate_lights=True)
-
-# for light in lights:
-#     send_actions(Action(light, on=True, colour=Colour('productivity'), transition_time=0))
-
-# effects.lava_lamp_warm(lights, speed=20)
-
-effects.lava_lamp(lights, Colour('orange'), similarity_percent=10, transition_time=10)
-
+app.run(debug=True, host='0.0.0.0')

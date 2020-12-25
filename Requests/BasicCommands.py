@@ -10,31 +10,25 @@ def fetch_all_lights():
     r = requests.get(f'http://{IP}/api/{user_id}/lights')
     return LightGroup([Light(light, r.json()[light]) for light in r.json()])
 
-
-def turn_on(light_id):
+def turn_on(light):
     data = {'on': True}
-    response = requests.put(f'http://{IP}/api/{user_id}/lights/{light_id}/state', json=data)
-    print(response.json())
+    r = requests.put(f'http://{IP}/api/{user_id}/lights/{light}/state', json=data)
+    print(f'{light}: {r.json()}')
 
-
-def turn_off(light_id):
+def turn_off(light):
     data = {'on': False}
-    response = requests.put(f'http://{IP}/api/{user_id}/lights/{light_id}/state', json=data)
-    print(response.json())
+    r = requests.put(f'http://{IP}/api/{user_id}/lights/{light}/state', json=data)
+    print(f'{light}: {r.json()}')
 
-
-def colour_loop(light_id):
+def colour_loop(light):
     data = {'effect': 'colorloop'}
-    response = requests.put(f'http://{IP}/api/{user_id}/lights/{light_id}/state', json=data)
-    print(response.json())
-
+    r = requests.put(f'http://{IP}/api/{user_id}/lights/{light}/state', json=data)
+    print(f'{light}: {r.json()}')
 
 def send_actions(actions):
     if type(actions) != list:
-        r = requests.put(f'http://{IP}/api/{user_id}/lights/{actions.light.id}/state', json=actions.as_dict())
-        print(r.json())
+        actions = [actions]
 
-    else:
-        for action in actions:
-            r = requests.put(f'http://{IP}/api/{user_id}/lights/{action.light.id}/state', json=action.as_dict())
-            print(r.json())
+    for action in actions:
+        r = requests.put(f'http://{IP}/api/{user_id}/lights/{action.light.id}/state', json=action.as_dict())
+        print(f'{action.light} --- {r.json()}')
