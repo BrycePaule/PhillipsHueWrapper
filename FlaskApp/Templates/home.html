@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-<h1> Welcome to my wrapper </h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}PiWebServer - Homepage{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>Welcome to the Homepage, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
+    </div>
+<!--    <p>The local date and time is {{moment(current_time).format('LLL') }}</p>-->
+<!--    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>-->
+    {{ wtf.quick_form(form) }}
+
+    <div class="lights">
+        <ul>
+            {% for light in lights %}
+                <li>{{ light.name, light.id }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
