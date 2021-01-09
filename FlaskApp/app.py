@@ -62,9 +62,9 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template('Errors/500.html', error=e)
 
-@app.route('/form')
-def page_not_found():
-    return render_template()
+# @app.route('/form')
+# def page_not_found():
+#     return render_template()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
