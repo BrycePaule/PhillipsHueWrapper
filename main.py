@@ -10,8 +10,6 @@ from Requests.BasicCommands import send_actions, fetch_all_lights, turn_off, tur
 import Requests.Effects as effects
 from CustomObjects.LightGroup import LightGroup
 
-from FlaskApp.app import app
-
 light_group = fetch_all_lights()
 while True:
     effects.random_party(light_group)
