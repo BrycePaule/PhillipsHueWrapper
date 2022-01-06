@@ -85,3 +85,19 @@ def lava_lamp(lights, colour, transition_time=10, brightness=100, similarity_per
             send_actions([action])
 
         sleep(transition_time)
+
+def random_party(lights):
+    while True:
+        transition_time = 1
+
+        for light in lights:
+            offset_colour = Colour.random()
+
+            light_trans_time = random.randint(1, 4)
+            if light_trans_time > transition_time:
+                transition_time = light_trans_time
+
+            action = Action(light, on=True, colour=offset_colour, transition_time=light_trans_time)
+            send_actions([action])
+
+        sleep(transition_time)
