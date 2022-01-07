@@ -3,10 +3,9 @@ from time import sleep
 
 from CustomObjects.Colour import Colour
 from CustomObjects.Action import Action
-from Requests.BasicCommands import send_actions
+from APIv1.Requests.BasicCommands import send_actions
 from CustomObjects.LightGroup import LightGroup
 from Utilities.utils import increment_index, roll, offset_val_by_percentage
-from itertools import cycle
 
 
 def fade_between(lights: LightGroup, colours, transition_time=10, brightness=100, alternate_lights=False):
