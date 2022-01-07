@@ -4,10 +4,12 @@ from Utilities.utils import fetch_username
     https://discovery.meethue.com/
 """
 
-# home
-# IP = '192.168.1.22'
+IP_Lists = {
+    "Home": '192.168.0.2',
+    "Parents": '192.168.1.22'
+}
 
-# remy
-IP = '192.168.0.2'
+SELECTION = "Home"
 
-user_id = fetch_username(IP)
+IP = IP_Lists[SELECTION]
+# USER_ID = fetch_username(IP_Lists[SELECTION])
